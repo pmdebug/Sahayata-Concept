@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saathi Layer v2 — Interactive Accessibility Demo</title>
+  <link rel="stylesheet" href="../extension/styles.css">
+  <link rel="stylesheet" href="../sdk/saathi-sdk.css">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>🌐 Saathi Layer v2 — Accessibility Sandbox</h1>
+    <p>Test Colorblind Symbols, Epilepsy Flash Protection, Complexity Meter, Simplifier, Translation & Voice Control</p>
+  </header>
+
+  <div class="layout">
+    <main class="main-content">
+      <section class="card">
+        <h2>1. Colorblind Assist Test Zone</h2>
+        <p>Many interfaces rely solely on red, yellow, and green colors to indicate action states. Toggle <strong>Colorblind Symbols</strong> in the extension or SDK to add semantic icons and underlines:</p>
+        <div class="btn-group">
+          <button class="btn-success" data-status="success">Confirm Payment</button>
+          <button class="btn-warning" data-status="warning">Pending Verification</button>
+          <button class="btn-danger" data-status="error">Delete Account</button>
+        </div>
+        <p style="margin-top:12px;">
+          Inline links without underlines are hard to spot for colorblind users:
+          <a href="#test1">Download Accessibility Report</a> |
+          <a href="#test2">View Privacy Settings</a>
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>2. Epilepsy Safe Mode & Flash Hazard Zone</h2>
+        <p>Rapid animations and flashing banners can trigger photosensitive epilepsy or visual migraines. Click <strong>Epilepsy Safe Mode</strong> to freeze all animations immediately:</p>
+        <div class="hazard-box">
+          <div class="flashing-banner">⚡ FLASHING PROMO BANNER — HIGH MOTION ANIMATION ⚡</div>
+          <div class="spinner-row">
+            <div class="pulse-circle"></div>
+            <div class="pulse-circle fast"></div>
+            <div class="pulse-circle"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>3. Easy Translate & Multilingual Zone</h2>
+        <p>Highlight any of the text below and click <strong>Translate</strong> or <strong>Read Aloud</strong> in the Saathi panel:</p>
+        <blockquote>
+          "डिजिटल अनुभव सभी के लिए उपयोग में आसान होने चाहिए। फिर भी विकलांगता, भाषा की बाधाएं और अपरिचित इंटरफ़ेस रोजमर्रा के कार्यों को कठिन बना सकते हैं।"
+        </blockquote>
+        <blockquote>
+          "Las experiencias digitales deberían ser fáciles de usar para todos, sin importar el idioma o las capacidades visuales."
+        </blockquote>
+      </section>
+    </main>
+
+    <aside class="sidebar">
+      <h3>📢 Sponsored Clutter Sidebar</h3>
+      <div class="ad-banner">🔥 90% OFF FLASH SALE! CLICK NOW!</div>
+      <div class="ad-banner">🎮 Play Trending Browser Games!</div>
+      <p>This sidebar represents distracting page clutter. Toggle <strong>Simplify Page Layout</strong> to hide sidebars and focus on the main content.</p>
+    </aside>
+  </div>
+
+  <script src="demo.js"></script>
+  <script src="../sdk/saathi-sdk.js"></script>
+</body>
+</html>
