@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Saathi Layer v2</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      width: 345px;
+      margin: 0;
+      padding: 14px;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+    .header h2 {
+      margin: 0;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge {
+      font-size: 11px;
+      background: var(--accent);
+      color: #0f172a;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .meter-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+    .meter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+    .meter-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-refresh {
+      width: auto !important;
+      padding: 3px 8px !important;
+      font-size: 11px !important;
+      border-radius: 4px !important;
+      background: #0f172a !important;
+      color: var(--accent) !important;
+      border: 1px solid var(--accent) !important;
+      cursor: pointer;
+    }
+    .btn-refresh:hover {
+      background: var(--accent) !important;
+      color: #0f172a !important;
+    }
+    .meter-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: #0f172a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .meter-bar-fill {
+      height: 100%;
+      width: 30%;
+      background: var(--success);
+      transition: width 0.35s ease, background 0.35s ease;
+    }
+    .meter-details {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .meter-diff {
+      margin-top: 8px;
+      padding: 7px 8px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.75);
+      border-left: 3px solid var(--accent);
+      font-size: 11px;
+      line-height: 1.45;
+      color: #e2e8f0;
+      display: none;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    button, select {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    button:hover, select:hover {
+      border-color: var(--accent);
+      background: #26354d;
+    }
+    button.active {
+      background: #0284c7;
+      border-color: var(--accent);
+    }
+    button.voice-active {
+      background: #991b1b;
+      border-color: var(--danger);
+    }
+    .status-pill {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+    }
+    button.voice-active .status-pill {
+      background: #ef4444;
+      color: #fff;
+      border-color: #fca5a5;
+    }
+    .row {
+      display: flex;
+      gap: 6px;
+    }
+    .row select {
+      flex: 1;
+    }
+    .row button {
+      width: auto;
+      white-space: nowrap;
+    }
+    .voice-box {
+      margin-top: 10px;
+      padding: 9px;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px dashed var(--accent);
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: var(--text);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>🛡️ Saathi Layer</h2>
+    <span class="badge">v2.1</span>
+  </div>
+
+  <div class="meter-card">
+    <div class="meter-header">
+      <span>Page Complexity & Risk</span>
+      <div class="meter-top-actions">
+        <strong id="complexity-label">Analyzing...</strong>
+        <button id="btn-refresh-complexity" class="btn-refresh" title="Re-check page complexity and compare changes">🔄 Refresh</button>
+      </div>
+    </div>
+    <div class="meter-bar-bg">
+      <div id="complexity-fill" class="meter-bar-fill"></div>
+    </div>
+    <div id="complexity-details" class="meter-details">Scanning DOM nodes & active animations...</div>
+    <div id="complexity-diff" class="meter-diff"></div>
+  </div>
+
+  <div class="grid">
+    <button id="btn-epilepsy">
+      <span>⚡ Epilepsy Safe Mode (Stop Flash)</span>
+      <span id="state-epilepsy" class="status-pill">OFF</span>
+    </button>
+
+    <button id="btn-colorblind">
+      <span>👁️ Colorblind Symbols & Contrast</span>
+      <span id="state-colorblind" class="status-pill">OFF</span>
+    </button>
+
+    <div class="row">
+      <select id="select-filter" title="Color Vision Filter">
+        <option value="none">🎨 Filter: Standard Vision</option>
+        <option value="protanopia">🔴 Protanopia (Red-Weak)</option>
+        <option value="deuteranopia">🟢 Deuteranopia (Green-Weak)</option>
+        <option value="tritanopia">🔵 Tritanopia (Blue-Weak)</option>
+        <option value="high-contrast">🌗 High Contrast Mode</option>
+      </select>
+    </div>
+
+    <button id="btn-simplify">
+      <span>🧹 Simplify Page Layout</span>
+      <span id="state-simplify" class="status-pill">OFF</span>
+    </button>
+
+    <div class="row">
+      <select id="select-lang" title="Target Language">
+        <option value="en">🌐 Translate to English (EN)</option>
+        <option value="hi">🌐 Translate to Hindi (HI)</option>
+        <option value="es">🌐 Translate to Spanish (ES)</option>
+        <option value="fr">🌐 Translate to French (FR)</option>
+      </select>
+      <button id="btn-translate">Go</button>
+    </div>
+
+    <button id="btn-tts">
+      <span>🔊 Read Selected Text Aloud</span>
+      <span class="status-pill">Play</span>
+    </button>
+
+    <button id="btn-voice">
+      <span id="label-voice">🎤 Voice Control: OFF</span>
+      <span id="state-voice" class="status-pill">START</span>
+    </button>
+  </div>
+
+  <div id="voice-box" class="voice-box"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
