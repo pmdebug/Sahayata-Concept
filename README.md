@@ -67,4 +67,12 @@ Add these two lines to any HTML page:
 ```html
 <link rel="stylesheet" href="sdk/saathi-sdk.css">
 <script src="sdk/saathi-sdk.js"></script>
+
 ```
+
+
+Future Addons:-
+1) Text size 
+2) Support for more languages 
+3) Automatically detecting language and changing the interface
+4) A way more simplified interface so that even those who don't know what an extension does, can use it. 
